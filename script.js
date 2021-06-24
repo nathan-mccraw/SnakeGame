@@ -12,7 +12,6 @@ document.addEventListener("click", (e) => {
   if (e.target.id === "clearHighScoreButton") {
     score.highScore = 0;
     displayScore();
-    document.querySelector("#gameCanvas").focus();
   }
 });
 
@@ -48,29 +47,18 @@ const score = {
 };
 
 function initializeGame() {
-  const canvas = document.querySelector("#gameCanvas");
-  const canvasContext = canvas.getContext("2d");
-
-  canvas.width = gameSettings.canvasWidth;
-  canvas.height = gameSettings.canvasHeight;
-
   snake.positionX.splice(4);
   snake.positionY.splice(4);
   for (i = 0; i < 5; i++) {
-    snake.positionX[i] = canvas.width / 2;
-    snake.positionY[i] = canvas.height / 2;
+    snake.positionX[i] = gameSettings.canvasWidth / 2;
+    snake.positionY[i] = gameSettings.canvasHeight / 2;
   }
 
-  canvasContext.fillStyle = "black";
-  canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+  document.querySelector("#gameCanvas").width = gameSettings.canvasWidth;
+  document.querySelector("#gameCanvas").height = gameSettings.canvasHeight;
+  drawOnCanvas(0, 0, gameSettings.canvasWidth, gameSettings.canvasHeight, "black");
 
-  canvasContext.fillStyle = "olive";
-  canvasContext.fillRect(
-    snake.positionX[0],
-    snake.positionY[0],
-    gameSettings.snakeSize,
-    gameSettings.snakeSize
-  );
+  writeOnCanvas(((gameSettings.canvasWidth/2) - 125), (gameSettings.canvasHeight/2), "Press Space to Start!", "white");
 
   placeApple();
 }
@@ -141,41 +129,22 @@ function turnSnakeRight() {
 }
 
 function drawEverythingElse() {
-  const canvas = document.querySelector("#gameCanvas");
-  const canvasContext = canvas.getContext("2d");
+  document.querySelector("#gameCanvas").width = gameSettings.canvasWidth;
+  document.querySelector("#gameCanvas").height = gameSettings.canvasHeight;
 
-  canvas.width = gameSettings.canvasWidth;
-  canvas.height = gameSettings.canvasHeight;
+  drawOnCanvas(0, 0, gameSettings.canvasWidth, gameSettings.canvasHeight, "black");
 
-  canvasContext.fillStyle = "black";
-  canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-
-  canvasContext.fillStyle = "red";
-  canvasContext.fillRect(
-    apple.positionX,
-    apple.positionY,
-    apple.size,
-    apple.size
-  );
+  drawOnCanvas(apple.positionX, apple.positionY, apple.size, apple.size, "red");
 }
 
 function drawSnake() {
-  const canvas = document.querySelector("#gameCanvas");
-  const canvasContext = canvas.getContext("2d");
-
   snake.positionX.pop();
   snake.positionY.pop();
   snake.positionX.unshift(snake.positionX[0] + snake.speedInX);
   snake.positionY.unshift(snake.positionY[0] + snake.speedInY);
 
   for (i = 0; i < snake.positionY.length; i++) {
-    canvasContext.fillStyle = "olive";
-    canvasContext.fillRect(
-      snake.positionX[i],
-      snake.positionY[i],
-      gameSettings.snakeSize,
-      gameSettings.snakeSize
-    );
+    drawOnCanvas(snake.positionX[i], snake.positionY[i], gameSettings.snakeSize, gameSettings.snakeSize, "olive");
   }
 }
 
@@ -368,4 +337,21 @@ function displayScore() {
 
   const displayHighScore = document.querySelector("#highScoreDiv");
   displayHighScore.innerHTML = `${score.highScore}`;
+}
+
+function drawOnCanvas (startCordinate, endCordinate, width, height, color){
+  const canvas = document.querySelector("#gameCanvas");
+  const canvasContext = canvas.getContext("2d");
+
+  canvasContext.fillStyle = color;
+  canvasContext.fillRect(startCordinate, endCordinate, width, height);
+}
+
+function writeOnCanvas (startCordinate, endCordinate, text, color){
+  const canvas = document.querySelector("#gameCanvas");
+  const canvasContext = canvas.getContext("2d");
+
+  canvasContext.font = "30px VT323";
+  canvasContext.fillStyle = color;
+  canvasContext.fillText(text, startCordinate, endCordinate);
 }
