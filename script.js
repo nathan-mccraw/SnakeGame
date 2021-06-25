@@ -100,6 +100,9 @@ function runGame() {
   }, gameSettings.refreshRate);
 }
 
+//Was torn between making a turnSnake(keyPressed) function or leave it as it 
+//is shown.  I felt this maximized readability but am anxious to see 
+//your opinion.
 function turnSnakeDown() {
   if (snake.speedInY === 0) {
     snake.speedInX = 0;
@@ -148,19 +151,6 @@ function drawSnake() {
   }
 }
 
-function isSnakeInbounds() {
-  if (
-    snake.positionX[0] <= 0 ||
-    snake.positionX[0] > gameSettings.canvasWidth - gameSettings.snakeSize
-  )
-    resetGame();
-  if (
-    snake.positionY[0] <= 0 ||
-    snake.positionY[0] > gameSettings.canvasHeight - gameSettings.snakeSize
-  )
-    resetGame();
-}
-
 function didSnakeCollideWithSelf() {
   for (i = 2; i < snake.positionX.length; i++)
     if (
@@ -174,6 +164,19 @@ function didSnakeCollideWithSelf() {
       )
     )
       resetGame();
+}
+
+function isSnakeInbounds() {
+  if (
+    snake.positionX[0] <= 0 ||
+    snake.positionX[0] > gameSettings.canvasWidth - gameSettings.snakeSize
+  )
+    resetGame();
+  if (
+    snake.positionY[0] <= 0 ||
+    snake.positionY[0] > gameSettings.canvasHeight - gameSettings.snakeSize
+  )
+    resetGame();
 }
 
 function didEatApple() {
@@ -196,21 +199,17 @@ function didEatApple() {
   }
 }
 
-function updateMultiplierTimer() {
-  const displayMutliplierTimer = document.querySelector("#countDownCounterDiv");
-
-  if (gameSettings.isGameRunning) {
-    if (score.timer) {
-      score.timer--;
-      displayMutliplierTimer.innerHTML = `:${score.timer}`;
-    } else {
-      displayMutliplierTimer.innerHTML = ":--";
-      score.multiplier = 1;
-      displayScore();
-    }
-  } else {
-    displayMutliplierTimer.innerHTML = `:${score.timer}`;
-  }
+function resetGame() {
+  snake.speedInX = 0;
+  snake.speedInY = gameSettings.snakeSize;
+  toggleGamePause();
+  initializeGame();
+  score.numberApplesEaten = 0;
+  score.gameScore = 0;
+  score.multiplier = 1;
+  score.timer = 5;
+  updateMultiplierTimer();
+  displayScore();
 }
 
 function doesCollide(obj1X, obj1Y, obj1Size, obj2X, obj2Y, obj2Size) {
@@ -226,19 +225,6 @@ function doesCollide(obj1X, obj1Y, obj1Size, obj2X, obj2Y, obj2Size) {
 function growSnake() {
   snake.positionX.push(snake.positionX[0]);
   snake.positionY.push(snake.positionY[0]);
-}
-
-function resetGame() {
-  snake.speedInX = 0;
-  snake.speedInY = gameSettings.snakeSize;
-  toggleGamePause();
-  initializeGame();
-  score.numberApplesEaten = 0;
-  score.gameScore = 0;
-  score.multiplier = 1;
-  score.timer = 5;
-  updateMultiplierTimer();
-  displayScore();
 }
 
 function placeApple() {
@@ -267,41 +253,21 @@ function placeApple() {
       placeApple();
 }
 
-function applyGameSettings() {
-  const canvasSizeSelected = document.getElementsByName("canvasSize");
-  let canvasSize = "";
-  for (let i = 0; i < canvasSizeSelected.length; i++) {
-    if (canvasSizeSelected[i].checked) canvasSize = canvasSizeSelected[i].value;
-  }
-  if (canvasSize === "small") {
-    gameSettings.canvasWidth = 300;
-    gameSettings.canvasHeight = 300;
-  } else if (canvasSize === "medium") {
-    gameSettings.canvasWidth = 500;
-    gameSettings.canvasHeight = 400;
-  } else if (canvasSize === "large") {
-    gameSettings.canvasWidth = 600;
-    gameSettings.canvasHeight = 500;
-  }
+function updateMultiplierTimer() {
+  const displayMutliplierTimer = document.querySelector("#countDownCounterDiv");
 
-  const userDesiredSnakeSpeed = document.getElementsByName("snakeSpeed");
-  for (let i = 0; i < userDesiredSnakeSpeed.length; i++) {
-    if (userDesiredSnakeSpeed[i].checked)
-      gameSettings.refreshRate = parseInt(userDesiredSnakeSpeed[i].value);
+  if (gameSettings.isGameRunning) {
+    if (score.timer) {
+      score.timer--;
+      displayMutliplierTimer.innerHTML = `:${score.timer}`;
+    } else {
+      displayMutliplierTimer.innerHTML = ":--";
+      score.multiplier = 1;
+      displayScore();
+    }
+  } else {
+    displayMutliplierTimer.innerHTML = `:${score.timer}`;
   }
-
-  const appleSizeSelected = document.getElementsByName("appleSize");
-  for (let i = 0; i < appleSizeSelected.length; i++) {
-    if (appleSizeSelected[i].checked) apple.size = appleSizeSelected[i].value;
-  }
-
-  const snakeSizeSelected = document.getElementsByName("snakeSize");
-  for (let i = 0; i < snakeSizeSelected.length; i++) {
-    if (snakeSizeSelected[i].checked)
-      gameSettings.snakeSize = parseInt(snakeSizeSelected[i].value);
-  }
-
-  initializeGame();
 }
 
 function updateScore() {
@@ -354,4 +320,41 @@ function writeOnCanvas (startCordinate, endCordinate, text, color){
   canvasContext.font = "30px VT323";
   canvasContext.fillStyle = color;
   canvasContext.fillText(text, startCordinate, endCordinate);
+}
+
+function applyGameSettings() {
+  const canvasSizeSelected = document.getElementsByName("canvasSize");
+  let canvasSize = "";
+  for (let i = 0; i < canvasSizeSelected.length; i++) {
+    if (canvasSizeSelected[i].checked) canvasSize = canvasSizeSelected[i].value;
+  }
+  if (canvasSize === "small") {
+    gameSettings.canvasWidth = 300;
+    gameSettings.canvasHeight = 300;
+  } else if (canvasSize === "medium") {
+    gameSettings.canvasWidth = 500;
+    gameSettings.canvasHeight = 400;
+  } else if (canvasSize === "large") {
+    gameSettings.canvasWidth = 600;
+    gameSettings.canvasHeight = 500;
+  }
+
+  const userDesiredSnakeSpeed = document.getElementsByName("snakeSpeed");
+  for (let i = 0; i < userDesiredSnakeSpeed.length; i++) {
+    if (userDesiredSnakeSpeed[i].checked)
+      gameSettings.refreshRate = parseInt(userDesiredSnakeSpeed[i].value);
+  }
+
+  const appleSizeSelected = document.getElementsByName("appleSize");
+  for (let i = 0; i < appleSizeSelected.length; i++) {
+    if (appleSizeSelected[i].checked) apple.size = appleSizeSelected[i].value;
+  }
+
+  const snakeSizeSelected = document.getElementsByName("snakeSize");
+  for (let i = 0; i < snakeSizeSelected.length; i++) {
+    if (snakeSizeSelected[i].checked)
+      gameSettings.snakeSize = parseInt(snakeSizeSelected[i].value);
+  }
+
+  initializeGame();
 }
