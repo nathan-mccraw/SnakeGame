@@ -56,9 +56,20 @@ function initializeGame() {
 
   document.querySelector("#gameCanvas").width = gameSettings.canvasWidth;
   document.querySelector("#gameCanvas").height = gameSettings.canvasHeight;
-  drawOnCanvas(0, 0, gameSettings.canvasWidth, gameSettings.canvasHeight, "black");
+  drawOnCanvas(
+    0,
+    0,
+    gameSettings.canvasWidth,
+    gameSettings.canvasHeight,
+    "black"
+  );
 
-  writeOnCanvas(((gameSettings.canvasWidth/2) - 125), (gameSettings.canvasHeight/2), "Press Space to Start!", "white");
+  writeOnCanvas(
+    gameSettings.canvasWidth / 2 - 125,
+    gameSettings.canvasHeight / 2,
+    "Press Space to Start!",
+    "white"
+  );
 
   placeApple();
 }
@@ -100,8 +111,8 @@ function runGame() {
   }, gameSettings.refreshRate);
 }
 
-//Was torn between making a turnSnake(keyPressed) function or leave it as it 
-//is shown.  I felt this maximized readability but am anxious to see 
+//Was torn between making a turnSnake(keyPressed) function or leave it as it
+//is shown.  I felt this maximized readability but am anxious to see
 //your opinion.
 function turnSnakeDown() {
   if (snake.speedInY === 0) {
@@ -135,7 +146,13 @@ function drawEverythingElse() {
   document.querySelector("#gameCanvas").width = gameSettings.canvasWidth;
   document.querySelector("#gameCanvas").height = gameSettings.canvasHeight;
 
-  drawOnCanvas(0, 0, gameSettings.canvasWidth, gameSettings.canvasHeight, "black");
+  drawOnCanvas(
+    0,
+    0,
+    gameSettings.canvasWidth,
+    gameSettings.canvasHeight,
+    "black"
+  );
 
   drawOnCanvas(apple.positionX, apple.positionY, apple.size, apple.size, "red");
 }
@@ -147,7 +164,13 @@ function drawSnake() {
   snake.positionY.unshift(snake.positionY[0] + snake.speedInY);
 
   for (i = 0; i < snake.positionY.length; i++) {
-    drawOnCanvas(snake.positionX[i], snake.positionY[i], gameSettings.snakeSize, gameSettings.snakeSize, "olive");
+    drawOnCanvas(
+      snake.positionX[i],
+      snake.positionY[i],
+      gameSettings.snakeSize,
+      gameSettings.snakeSize,
+      "olive"
+    );
   }
 }
 
@@ -305,7 +328,7 @@ function displayScore() {
   displayHighScore.innerHTML = `${score.highScore}`;
 }
 
-function drawOnCanvas (startCordinate, endCordinate, width, height, color){
+function drawOnCanvas(startCordinate, endCordinate, width, height, color) {
   const canvas = document.querySelector("#gameCanvas");
   const canvasContext = canvas.getContext("2d");
 
@@ -313,7 +336,7 @@ function drawOnCanvas (startCordinate, endCordinate, width, height, color){
   canvasContext.fillRect(startCordinate, endCordinate, width, height);
 }
 
-function writeOnCanvas (startCordinate, endCordinate, text, color){
+function writeOnCanvas(startCordinate, endCordinate, text, color) {
   const canvas = document.querySelector("#gameCanvas");
   const canvasContext = canvas.getContext("2d");
 
@@ -358,3 +381,21 @@ function applyGameSettings() {
 
   initializeGame();
 }
+
+const modal = document.getElementById("myModal");
+const btn = document.getElementById("myBtn");
+const span = document.getElementsByClassName("close")[0];
+
+btn.addEventListener("click", function () {
+  modal.style.display = "block";
+});
+
+span.addEventListener("click", function () {
+  modal.style.display = "none";
+});
+
+window.addEventListener("click", function (event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+});

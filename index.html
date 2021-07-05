@@ -1,119 +1,174 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Ubuntu&family=VT323&display=swap" rel="stylesheet" />
-  <title>Snake Game</title>
-</head>
-
-<body>
-  <header>
-    <h1>Snake Game</h1>
-    <p>created by: Nathan McCraw</p>
-  </header>
-  <div id="canvasAndSettingsDiv">
-    <div id="multiplierCountDownDiv">
-      <div id="countDownTitleDiv">Multiplier Reset:</div>
-      <div id="countDownCounterDiv"></div>
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <title>Snake Game</title>
+  </head>
+  <body>
+    <header>
+      <h1>Snake Game</h1>
+      <p>created by: Nathan McCraw</p>
+    </header>
+    <div id="modalBtn">
+      <button id="myBtn">Click to see the rules</button>
     </div>
-    <div id="canvasDiv">
-      <canvas id="gameCanvas">
-        This is alternate text that will show when the browser doesn't support
-        canvas or JS
-      </canvas>
-    </div>
-    <div id="settingsDiv">
-      <div id="gameSizeDiv">
-        <h3>Game Size:</h3>
-        <div>
-          <input type="radio" name="canvasSize" value="small" id="smallCanvas" />
-          <label for="smallCanvas">Small</label>
-        </div>
-        <div>
-          <input type="radio" name="canvasSize" value="medium" id="mediumCanvas" />
-          <label for="mediumCanvas">Medium</label>
-        </div>
-        <div>
-          <input type="radio" name="canvasSize" value="large" id="largeCanvas" checked="true" />
-          <label for="largeCanvas">Large</label>
-        </div>
-      </div>
-      <div id="snakeSpeedDiv">
-        <h3>Snake Speed:</h3>
-        <div>
-          <input type="radio" name="snakeSpeed" value="250" id="slowSpeed" />
-          <label for="slowSpeed">Slow</label>
-        </div>
-        <div>
-          <input type="radio" name="snakeSpeed" value="125" id="normalSpeed" checked="true" />
-          <label for="normalSpeed">Normal</label>
-        </div>
-        <div>
-          <input type="radio" name="snakeSpeed" value="50" id="fastSpeed" />
-          <label for="fastSpeed">Fast</label>
-        </div>
-      </div>
-      <div id="appleSizeDiv">
-        <h3>Apple Size:</h3>
-        <div>
-          <input type="radio" name="appleSize" value="15" id="smallApple" />
-          <label for="smallApple">Small</label>
-        </div>
-        <div>
-          <input type="radio" name="appleSize" value="30" id="normalApple" checked="true" />
-          <label for="normalApple">Normal</label>
-        </div>
-        <div>
-          <input type="radio" name="appleSize" value="50" id="bigApple" />
-          <label for="bigApple">Big</label>
-        </div>
-      </div>
-      <div id="snakeSizeDiv">
-        <h3>Snake Size:</h3>
-        <div>
-          <input type="radio" name="snakeSize" value="10" id="smallSnake" />
-          <label for="smallSnake">Small</label>
-        </div>
-        <div>
-          <input type="radio" name="snakeSize" value="15" id="mediumSnake" checked="true" />
-          <label for="mediumSnake">Medium</label>
-        </div>
-        <div>
-          <input type="radio" name="snakeSize" value="20" id="largeSnake" />
-          <label for="largeCanvas">Large</label>
-        </div>
-      </div>
-      <div id="clearHighScoreDiv">
-        <button id="clearHighScoreButton">Clear High Score</button>
-      </div>
-      <div id="applySettingsDiv">
-        <button id="applySettingsButton">Apply Settings</button>
+    <div class="modal" id="myModal">
+      <div class="modal-content">
+        <span class="close">X</span>
+        <h2>Rules</h2>
+        <p>1. The snake must hit the apple to increase the score.</p>
+        <p>2. If you hit the edges of the square its game over.</p>
+        <p>
+          3. If the snake eats the apple before the timer reaches zero, you will
+          increment the multiplier by one.
+        </p>
+        <p>4. Your score is (multiplier x 10) + the previous score</p>
+        <p>
+          5. The higher you can increment the multiplier, the higher your score
+          will increase.
+        </p>
+        <p>6. If the snake hits itself, it's game over.</p>
       </div>
     </div>
-  </div>
-  <footer>
-    <div id="footerDiv">
-      <div id="leftFooterDiv">
-        <div id="applesEatenDiv">
-          Apples Eaten: <span id="applesEatenSpan">12</span>
-        </div>
-        <div id="multiplierDiv">
-          Multiplier: <span id="multiplierSpan">x4</span>
-        </div>
+    <div id="canvasAndSettingsDiv">
+      <div id="multiplierCountDownDiv">
+        <div id="countDownTitleDiv">Multiplier Reset:</div>
+        <div id="countDownCounterDiv"></div>
       </div>
-      <div id="centerFooterDiv">
-        <div id="currentScoreTitleDiv">Your Score:</div>
-        <div id="currentScoreDiv">10347</div>
+      <div id="canvasDiv">
+        <canvas id="gameCanvas">
+          This is alternate text that will show when the browser doesn't support
+          canvas or JS
+        </canvas>
       </div>
-      <div id="rightFooterDiv">
-        <div id="highScoreTitleDiv">High Score:</div>
-        <div id="highScoreDiv">25863</div>
+      <div id="settingsDiv">
+        <div id="gameSizeDiv">
+          <h3>Game Size:</h3>
+          <div>
+            <input
+              type="radio"
+              name="canvasSize"
+              value="small"
+              id="smallCanvas"
+            />
+            <label for="smallCanvas">Small</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              name="canvasSize"
+              value="medium"
+              id="mediumCanvas"
+            />
+            <label for="mediumCanvas">Medium</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              name="canvasSize"
+              value="large"
+              id="largeCanvas"
+              checked="true"
+            />
+            <label for="largeCanvas">Large</label>
+          </div>
+        </div>
+        <div id="snakeSpeedDiv">
+          <h3>Snake Speed:</h3>
+          <div>
+            <input type="radio" name="snakeSpeed" value="250" id="slowSpeed" />
+            <label for="slowSpeed">Slow</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              name="snakeSpeed"
+              value="125"
+              id="normalSpeed"
+              checked="true"
+            />
+            <label for="normalSpeed">Normal</label>
+          </div>
+          <div>
+            <input type="radio" name="snakeSpeed" value="50" id="fastSpeed" />
+            <label for="fastSpeed">Fast</label>
+          </div>
+        </div>
+        <div id="appleSizeDiv">
+          <h3>Apple Size:</h3>
+          <div>
+            <input type="radio" name="appleSize" value="15" id="smallApple" />
+            <label for="smallApple">Small</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              name="appleSize"
+              value="30"
+              id="normalApple"
+              checked="true"
+            />
+            <label for="normalApple">Normal</label>
+          </div>
+          <div>
+            <input type="radio" name="appleSize" value="50" id="bigApple" />
+            <label for="bigApple">Big</label>
+          </div>
+        </div>
+        <div id="snakeSizeDiv">
+          <h3>Snake Size:</h3>
+          <div>
+            <input type="radio" name="snakeSize" value="10" id="smallSnake" />
+            <label for="smallSnake">Small</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              name="snakeSize"
+              value="15"
+              id="mediumSnake"
+              checked="true"
+            />
+            <label for="mediumSnake">Medium</label>
+          </div>
+          <div>
+            <input type="radio" name="snakeSize" value="20" id="largeSnake" />
+            <label for="largeCanvas">Large</label>
+          </div>
+        </div>
+        <div id="applySettingsDiv">
+          <button id="applySettingsButton">Apply Settings</button>
+        </div>
       </div>
     </div>
-  </footer>
-  <script src="script.js"></script>
-</body>
-
+    <footer>
+      <div id="footerDiv">
+        <div id="leftFooterDiv">
+          <div id="applesEatenDiv">
+            Apples Eaten: <span id="applesEatenSpan">12</span>
+          </div>
+          <div id="multiplierDiv">
+            Multiplier: <span id="multiplierSpan">x4</span>
+          </div>
+        </div>
+        <div id="centerFooterDiv">
+          <div id="currentScoreTitleDiv">Your Score:</div>
+          <div id="currentScoreDiv">10347</div>
+        </div>
+        <div id="rightFooterDiv">
+          <div id="highScoreTitleDiv">High Score:</div>
+          <div id="highScoreDiv">25863</div>
+        </div>
+        <div id="clearHighScoreDiv">
+          <button id="clearHighScoreButton">Clear High Score</button>
+        </div>
+      </div>
+    </footer>
+    <script src="script.js"></script>
+  </body>
 </html>
