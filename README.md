@@ -10,5 +10,5 @@ This project was the largest project I've completed to date.  I continued my kno
 
 
 #### Author
-Nathan McCraw -- Inspiring Software Developer [LinkedIn](https://www.linkedin.com/in/nathan-mccraw-5291535b/) [Personal Website - In Production]
+Nathan McCraw -- Software Developer [LinkedIn](https://www.linkedin.com/in/nathan-mccraw-5291535b/) [Personal Website - In Production]
 
