@@ -111,9 +111,6 @@ function runGame() {
   }, gameSettings.refreshRate);
 }
 
-//Was torn between making a turnSnake(keyPressed) function or leave it as it
-//is shown.  I felt this maximized readability but am anxious to see
-//your opinion.
 function turnSnakeDown() {
   if (snake.speedInY === 0) {
     snake.speedInX = 0;
@@ -252,9 +249,6 @@ function growSnake() {
 
 function placeApple() {
   apple.size = Math.floor(Math.random() * gameSettings.appleBaseSize + 5);
-
-  //wanted to wrap the two expressions below in a do..while(doesCollide) but
-  //couldn't figure out how to iterate through snake array in the while expression
   apple.positionX = Math.floor(
     Math.random() * (gameSettings.canvasWidth - apple.size)
   );
@@ -282,14 +276,14 @@ function updateMultiplierTimer() {
   if (gameSettings.isGameRunning) {
     if (score.timer) {
       score.timer--;
-      displayMutliplierTimer.innerHTML = `:${score.timer}`;
+      displayMutliplierTimer.textContent = `:${score.timer}`;
     } else {
-      displayMutliplierTimer.innerHTML = ":--";
+      displayMutliplierTimer.textContent = ":--";
       score.multiplier = 1;
       displayScore();
     }
   } else {
-    displayMutliplierTimer.innerHTML = `:${score.timer}`;
+    displayMutliplierTimer.textContent = `:${score.timer}`;
   }
 }
 
@@ -316,16 +310,16 @@ function updateScore() {
 
 function displayScore() {
   const displayApplesEaten = document.querySelector("#applesEatenSpan");
-  displayApplesEaten.innerHTML = `${score.numberApplesEaten}`;
+  displayApplesEaten.textContent = `${score.numberApplesEaten}`;
 
   const displayMutliplier = document.querySelector("#multiplierSpan");
-  displayMutliplier.innerHTML = `${score.multiplier}`;
+  displayMutliplier.textContent = `${score.multiplier}`;
 
   const displayGameScore = document.querySelector("#currentScoreDiv");
-  displayGameScore.innerHTML = `${score.gameScore}`;
+  displayGameScore.textContent = `${score.gameScore}`;
 
   const displayHighScore = document.querySelector("#highScoreDiv");
-  displayHighScore.innerHTML = `${score.highScore}`;
+  displayHighScore.textContent = `${score.highScore}`;
 }
 
 function drawOnCanvas(startCordinate, endCordinate, width, height, color) {
