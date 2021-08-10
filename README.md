@@ -3,7 +3,8 @@ An interactive, playable 2D snake game built with vanilla JS, HTML and CSS
 
 Play the Snake Game application [here](https://nathan-mccraw.github.io/SnakeGame/)
 
-![preview](https://user-images.githubusercontent.com/84479635/128904645-a74f7070-307b-4578-b1fe-3b270e8df74f.JPG)
+![preview](https://user-images.githubusercontent.com/84479635/128907639-eddf6a6b-489a-4b5d-af81-bbc49e93d9ed.JPG)
+
 
 ## Installation
 
@@ -24,7 +25,7 @@ To use the Snake Game application:
 6.  If you only wish to run the application, navigate to C:\Users\{YOUR ACCOUNT NAME}\Snake Game to find index.html. Open this html file with google Chrome to view the               application without viewing the code.
 
 ### Summary
-This project was the largest project I've completed to date.  I continued my knowledge built from my previous project, the calculator app, to implement user inputs to set variables in JavaScript.  In this project I was introduced to the canvas in HTML/JavaScript and used the setInterval function to make an interactive environment.  The drawn shapes introduced me to the cartesian coordinate system as it relates to programming in order to implement collision detection.
+This project was a fun build.  I orinally did not play to implement the user settings, but as I continued to refactor my code, I saw the opportunity.  I wrote the code in a such a way that allowed the canvas edging and game area edging to be stored as a variable, this allowed me to set that variable from a DOM input, hence allowing basic user input settings. I continued that pattern and applied the same logic, setting the variable from a DOM input for snake size and apple size.  The snake speed user input settings is actually applied to the 'refresh rate', which is the variable name I used to determine how often the canvas should be drawn.  To increase the snake speed, the interval between canvas updates is decreased.  This allowed me to maintain a consistent movement of the snake, as the incrementaion of the snake on the canvas for each canvas drawn is the same regardless of speed, hence the speed is actually only applied to how often the canvas is drawn.  As mentioned, this project was buillt using the canvas in JavaScript and as such such deals with drawn shapes, the cartesian coordinate system, and collision detection.
 
 
 #### Author
